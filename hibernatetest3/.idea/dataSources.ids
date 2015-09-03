@@ -7,5 +7,27 @@
     </database-info>
     <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
     <schema name="" catalog="schools"/>
+    <table name="address_inf" schema="" catalog="schools" type="TABLE">
+      <column name="address_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="address_detail" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="address_id"/>
+      <exported-key name="FK_d0akgh2385j4j0w78l54f6lkg" table="person_address" schema="" catalog="schools" columns="address_id"/>
+    </table>
+    <table name="person_address" schema="" catalog="schools" type="TABLE">
+      <column name="person_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="address_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="address_id,person_id"/>
+      <foreign-key name="FK_anrg3ju8wu2kes1a2gr8bp7kg" columns="person_id" ref-table="person_inf" ref-schema="" ref-catalog="schools" ref-columns="person_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_d0akgh2385j4j0w78l54f6lkg" columns="address_id" ref-table="address_inf" ref-schema="" ref-catalog="schools" ref-columns="address_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_anrg3ju8wu2kes1a2gr8bp7kg" unique="false" columns="person_id"/>
+      <index name="FK_d0akgh2385j4j0w78l54f6lkg" unique="false" columns="address_id"/>
+    </table>
+    <table name="person_inf" schema="" catalog="schools" type="TABLE">
+      <column name="person_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="person_age" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="person_name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="person_id"/>
+      <exported-key name="FK_anrg3ju8wu2kes1a2gr8bp7kg" table="person_address" schema="" catalog="schools" columns="person_id"/>
+    </table>
   </data-source>
 </component>
