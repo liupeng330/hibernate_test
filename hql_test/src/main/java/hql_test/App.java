@@ -45,13 +45,61 @@ public class App
         {
             Transaction transaction = session.beginTransaction();
 
-            List books = session.createQuery("from BookEntity as b").list();
-            for(Object book: books)
+//            List addresses = session.createQuery(
+//                    "select distinct a from AddressEntity as a where a.personByPersonId.age > :age")
+//                    .setInteger("age", 100)
+//                    .list();
+//            for(Object address: addresses)
+//            {
+//                AddressEntity addre = (AddressEntity)address;
+//                System.out.println(
+//                        addre.getId() + ", " +
+//                        addre.getDetail() + "," +
+//                        addre.getPersonByPersonId().getName());
+//            }
+
+//            List addresses = session.createQuery(
+//                    "select distinct a from AddressEntity as a inner join a.personByPersonId as p where p.age > :age")
+//                    .setInteger("age", 100)
+//                    .list();
+//            for(Object address: addresses)
+//            {
+//                AddressEntity addre = (AddressEntity)address;
+//                System.out.println(
+//                        addre.getId() + ", " +
+//                        addre.getDetail() + "," +
+//                        addre.getPersonByPersonId().getName());
+//            }
+
+//            List persons = session.createQuery(
+//                    "from PersonEntity as p where p.addressesById.size > 2").list();
+//            for(Object p: persons)
+//            {
+//                PersonEntity personEntity = (PersonEntity)p;
+//                System.out.println(personEntity.getName());
+//                System.out.println(personEntity.getAge());
+//            }
+
+            List addressAndPersons = session.createQuery(
+                    "from AddressEntity as a inner join a.personByPersonId as p where p.age > :age")
+                    .setInteger("age", 100)
+                    .list();
+            for(Object obj: addressAndPersons)
             {
-                BookEntity b = (BookEntity)book;
-                System.out.println(b.getId());
-                System.out.println(b.getName());
-                System.out.println(b.getPrice());
+                Object[] objs = (Object[])obj;
+                AddressEntity addre = (AddressEntity)objs[0];
+                System.out.println("--Getting address--");
+                System.out.println(
+                        addre.getId() + ", " +
+                        addre.getDetail() + "," +
+                        addre.getPersonByPersonId().getName());
+
+                PersonEntity person = (PersonEntity)objs[1];
+                System.out.println("--Getting person--");
+                System.out.println(
+                        person.getId() + ", " +
+                        person.getName() + ", " +
+                        person.getAge());
             }
 
             transaction.commit();
